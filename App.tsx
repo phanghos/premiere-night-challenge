@@ -5,14 +5,16 @@
  * @format
  */
 
-import { MoviesList } from '@/components/MoviesList';
-import { mockData } from '@/mockData';
+import { MoviesCarousel } from '@/components/MoviesCarousel';
+import { mockDataNowPlaying } from '@/mockDataNowPlaying';
+import { mockDataPopular } from '@/mockDataPopular';
+import { mockDataTopRated } from '@/mockDataTopRated';
 import {
   QueryClient,
   QueryClientProvider,
   QueryFunction,
 } from '@tanstack/react-query';
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -41,7 +43,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = true; //useColorScheme() === 'dark';
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -55,10 +57,31 @@ function App() {
   );
 }
 
+const DATA = [
+  { id: 1, title: 'Now Playing', data: mockDataNowPlaying.results },
+  { id: 2, title: 'Popular', data: mockDataPopular.results },
+  { id: 3, title: 'Top Rated', data: mockDataTopRated.results },
+];
+
 function AppContent() {
   return (
     <SafeAreaView style={styles.container}>
-      <MoviesList movies={mockData.results} />
+      <ScrollView>
+        <Text
+          style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 16 }}
+        >
+          Premiere Night
+        </Text>
+        {DATA.map(it => {
+          return (
+            <MoviesCarousel
+              key={`${it.id}`}
+              movies={it.data}
+              sectionTitle={it.title}
+            />
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -66,8 +89,7 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#000',
   },
 });
 

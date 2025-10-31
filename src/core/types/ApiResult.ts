@@ -1,3 +1,3 @@
 export type ApiResult<T> = {
-  results: T[];
+  results: T;
 };

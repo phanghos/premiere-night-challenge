@@ -1,7 +1,7 @@
 import type { ApiResult } from './core/types/ApiResult';
 import type { MovieRaw } from './core/types/MovieRaw';
 
-export const mockData: ApiResult<MovieRaw> = {
+export const mockDataNowPlaying: ApiResult<MovieRaw[]> = {
   dates: {
     maximum: '2023-05-03',
     minimum: '2023-03-16',
