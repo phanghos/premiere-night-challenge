@@ -12,18 +12,30 @@ import { MoviesCarouselListItem } from './MoviesCarouselListItem';
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 type OnLayout = (event: LayoutChangeEvent) => void;
+type OnMoviePress = (movie: MovieRaw) => void;
 
 type MoviesListProps = {
   movies: MovieRaw[];
   sectionTitle: string;
+  onMoviePress: OnMoviePress;
 };
 
 const renderItem =
-  (onLayout: OnLayout) =>
+  (onLayout: OnLayout, onMoviePress: OnMoviePress) =>
   ({ item }: CarouselRenderItemInfo<MovieRaw>) =>
-    <MoviesCarouselListItem movie={item} onLayout={onLayout} />;
+    (
+      <MoviesCarouselListItem
+        movie={item}
+        onLayout={onLayout}
+        onPress={onMoviePress}
+      />
+    );
 
-export const MoviesCarousel = ({ movies, sectionTitle }: MoviesListProps) => {
+export const MoviesCarousel = ({
+  movies,
+  sectionTitle,
+  onMoviePress,
+}: MoviesListProps) => {
   const [carouselHeight, setCarouselHeight] = useState(0);
   const carouselHeightRef = useRef<number[]>([]);
 
@@ -56,7 +68,7 @@ export const MoviesCarousel = ({ movies, sectionTitle }: MoviesListProps) => {
         width={SCREEN_WIDTH - 32}
         height={carouselHeight}
         data={movies}
-        renderItem={renderItem(onLayout)}
+        renderItem={renderItem(onLayout, onMoviePress)}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.9,

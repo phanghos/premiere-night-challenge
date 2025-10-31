@@ -11,15 +11,20 @@ import {
 type MovieListItemProps = {
   movie: MovieRaw;
   onLayout?: (event: LayoutChangeEvent) => void;
+  onPress: (movie: MovieRaw) => void;
 };
 
 export const MoviesCarouselListItem = ({
   movie,
   onLayout,
+  onPress,
 }: MovieListItemProps) => {
   return (
     <TouchableOpacity
       onLayout={onLayout}
+      onPress={() => {
+        onPress(movie);
+      }}
       style={{
         width: 150,
         borderRadius: 8,
