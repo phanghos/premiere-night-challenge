@@ -1,4 +1,4 @@
-import { MovieRaw } from '@/core/types/MovieRaw';
+import { Movie } from '@/domain/movie/entities/Movie';
 import { useRef, useState } from 'react';
 import { Dimensions, LayoutChangeEvent, Text, View } from 'react-native';
 import Animated, {
@@ -12,17 +12,17 @@ import { MoviesCarouselListItem } from './MoviesCarouselListItem';
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 type OnLayout = (event: LayoutChangeEvent) => void;
-type OnMoviePress = (movie: MovieRaw) => void;
+type OnMoviePress = (movie: Movie) => void;
 
 type MoviesListProps = {
-  movies: MovieRaw[];
+  movies: Movie[];
   sectionTitle: string;
   onMoviePress: OnMoviePress;
 };
 
 const renderItem =
   (onLayout: OnLayout, onMoviePress: OnMoviePress) =>
-  ({ item }: CarouselRenderItemInfo<MovieRaw>) =>
+  ({ item }: CarouselRenderItemInfo<Movie>) =>
     (
       <MoviesCarouselListItem
         movie={item}

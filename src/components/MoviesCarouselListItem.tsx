@@ -1,5 +1,4 @@
-import { MovieRaw } from '@/core/types/MovieRaw';
-import { buildMovieImageUrl } from '@/shared/utils/buildMovieImageUrl';
+import { Movie } from '@/domain/movie/entities/Movie';
 import {
   Image,
   LayoutChangeEvent,
@@ -9,9 +8,9 @@ import {
 } from 'react-native';
 
 type MovieListItemProps = {
-  movie: MovieRaw;
+  movie: Movie;
   onLayout?: (event: LayoutChangeEvent) => void;
-  onPress: (movie: MovieRaw) => void;
+  onPress: (movie: Movie) => void;
 };
 
 export const MoviesCarouselListItem = ({
@@ -31,7 +30,7 @@ export const MoviesCarouselListItem = ({
       }}
     >
       <Image
-        source={{ uri: buildMovieImageUrl(movie.poster_path) }}
+        source={{ uri: movie.posterPath }}
         style={{
           width: '100%',
           aspectRatio: 27 / 40,
@@ -54,7 +53,7 @@ export const MoviesCarouselListItem = ({
           }}
           numberOfLines={2}
         >
-          {movie.original_title}
+          {movie.originalTitle}
         </Text>
       </View>
     </TouchableOpacity>

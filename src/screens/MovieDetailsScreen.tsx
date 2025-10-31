@@ -1,6 +1,5 @@
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { MovieRaw } from '@/core/types/MovieRaw';
-import { buildMovieImageUrl } from '@/shared/utils/buildMovieImageUrl';
+import { Movie } from '@/domain/movie/entities/Movie';
 import { Button, HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Dimensions, Image, Text, View } from 'react-native';
@@ -12,7 +11,7 @@ export const MovieDetailsScreen = () => {
   const {
     params: { movie },
   } = useRoute();
-  const movieTyped: MovieRaw = movie;
+  const movieTyped: Movie = movie;
 
   const onAddToWatchlistPress = () => {
     console.log('Adding to Watchlist...');
@@ -24,7 +23,7 @@ export const MovieDetailsScreen = () => {
         headerBackgroundColor={'#000'}
         headerImage={
           <Image
-            source={{ uri: buildMovieImageUrl(movieTyped.poster_path) }}
+            source={{ uri: movieTyped.posterPath }}
             style={{ width: SCREEN_WIDTH, height: 300, zIndex: 1 }}
             resizeMode="stretch"
           />
@@ -38,7 +37,7 @@ export const MovieDetailsScreen = () => {
               color: '#fff',
             }}
           >
-            {movieTyped.original_title}
+            {movieTyped.originalTitle}
           </Text>
           <Text
             style={{
