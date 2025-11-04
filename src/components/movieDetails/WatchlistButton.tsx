@@ -16,12 +16,11 @@ export const WatchlistButton = ({ movie }: WatchlistButtonProps) => {
   const inWatchlist = isInWatchlist(movie.id);
   const onPress = useCallback(() => {
     if (inWatchlist) {
-      console.log('Removing...');
       removeFromWatchlist(movie.id);
     } else {
-      console.log('Adding...');
       addToWatchlist(movie);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inWatchlist]);
   const buttonText = inWatchlist ? 'Remove From Watchlist' : 'Add To Watchlist';
 

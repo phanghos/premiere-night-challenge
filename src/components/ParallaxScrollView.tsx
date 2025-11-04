@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -7,7 +7,9 @@ import Animated, {
   useScrollOffset,
 } from 'react-native-reanimated';
 
-const HEADER_HEIGHT = 250;
+const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
+
+const HEADER_HEIGHT = SCREEN_HEIGHT / 2.5;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;

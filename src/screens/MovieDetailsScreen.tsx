@@ -7,7 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Dimensions, Image, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
 export const MovieDetailsScreen = () => {
   useWatchlistStore(s => s.watchlist);
@@ -25,7 +25,11 @@ export const MovieDetailsScreen = () => {
         headerImage={
           <Image
             source={{ uri: movieTyped.posterPath }}
-            style={{ width: SCREEN_WIDTH, height: 300, zIndex: 1 }}
+            style={{
+              width: SCREEN_WIDTH,
+              height: SCREEN_HEIGHT / 2.5,
+              zIndex: 1,
+            }}
             resizeMode="stretch"
           />
         }
