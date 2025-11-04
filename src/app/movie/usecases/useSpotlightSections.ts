@@ -41,19 +41,17 @@ export const useSpotlightSections = () => {
 
   const sections = useMemo(
     () =>
-      isLoading
-        ? []
-        : [
-            initSpotlightSection('Now Playing', nowPlayingData),
-            initSpotlightSection('Popular', popularData),
-            initSpotlightSection('Top Rated', topRatedData),
-          ].filter(it => !!it.data.length),
-    [nowPlayingData, popularData, topRatedData, isLoading],
+      [
+        initSpotlightSection('Now Playing', nowPlayingData),
+        initSpotlightSection('Popular', popularData),
+        initSpotlightSection('Top Rated', topRatedData),
+      ].filter(it => !!it.data.length),
+    [nowPlayingData, popularData, topRatedData],
   );
 
   return {
     isLoading,
     isError,
-    sections,
+    sections: isLoading ? [] : sections,
   };
 };
