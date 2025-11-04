@@ -3,6 +3,7 @@ import { useFetchPopularMoviesRepository } from '@/data/movie/repositories/useFe
 import { useFetchTopRatedMoviesRepository } from '@/data/movie/repositories/useFetchTopRatedMoviesRepository';
 import { addToWatchlist } from '@/domain/movie/stores/actions/addToWatchlist';
 import { isInWatchlist } from '@/domain/movie/stores/actions/isInWatchlist';
+import { isWatchlistEmpty } from '@/domain/movie/stores/actions/IsWatchlistEmpty';
 import { removeFromWatchlist } from '@/domain/movie/stores/actions/removeFromWatchlist';
 import { resetWatchlist } from '@/domain/movie/stores/actions/resetWatchlist';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
@@ -29,6 +30,7 @@ export const DependencyProvider = ({ children }: DependencyProviderProps) => {
       removeFromWatchlist: removeFromWatchlist(useWatchlistStore),
       resetWatchlist: resetWatchlist(useWatchlistStore),
       isInWatchlist: isInWatchlist(useWatchlistStore),
+      isWatchlistEmpty: isWatchlistEmpty(useWatchlistStore),
     },
   };
 

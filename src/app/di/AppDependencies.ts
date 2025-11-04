@@ -3,6 +3,7 @@ import type { FetchPopularMoviesRepository } from '@/domain/movie/repositories/F
 import type { FetchTopRatedMoviesRepository } from '@/domain/movie/repositories/FetchTopRatedMoviesRepository';
 import type { AddToWatchlist } from '@/domain/movie/stores/actions/addToWatchlist';
 import type { IsInWatchlist } from '@/domain/movie/stores/actions/isInWatchlist';
+import type { IsWatchlistEmpty } from '@/domain/movie/stores/actions/IsWatchlistEmpty';
 import type { RemoveFromWatchlist } from '@/domain/movie/stores/actions/removeFromWatchlist';
 import type { ResetWatchlist } from '@/domain/movie/stores/actions/resetWatchlist';
 
@@ -15,5 +16,6 @@ export type AppDependencies = {
     removeFromWatchlist: RemoveFromWatchlist;
     resetWatchlist: ResetWatchlist;
     isInWatchlist: IsInWatchlist;
+    isWatchlistEmpty: IsWatchlistEmpty;
   };
 };
