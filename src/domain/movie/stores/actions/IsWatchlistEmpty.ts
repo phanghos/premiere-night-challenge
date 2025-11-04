@@ -1,4 +1,4 @@
-import { WatchlistStore } from '../watchlistStore';
+import type { WatchlistStore } from '../watchlistStore';
 
 export const isWatchlistEmpty = (store: WatchlistStore) => (): boolean => {
   return !Object.values(store.getState().watchlist).length;
