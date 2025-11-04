@@ -49,11 +49,11 @@ function App() {
       <GestureHandlerRootView>
         <SafeAreaProvider>
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <NavigationContainer>
-            <DependencyProvider>
+          <DependencyProvider>
+            <NavigationContainer>
               <RootStack />
-            </DependencyProvider>
-          </NavigationContainer>
+            </NavigationContainer>
+          </DependencyProvider>
         </SafeAreaProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

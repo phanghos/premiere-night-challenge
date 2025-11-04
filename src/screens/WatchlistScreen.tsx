@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
 import { ListRenderItemInfo, View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const keyExtractor = (movie: Movie) => `${movie.id}`;
 
@@ -46,7 +45,7 @@ export const WatchlistScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{ flex: 1, backgroundColor: '#000' }}>
       {!watchlist.length ? (
         <EmptyList />
       ) : (
@@ -60,6 +59,6 @@ export const WatchlistScreen = () => {
           itemLayoutAnimation={LinearTransition}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
