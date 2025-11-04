@@ -1,15 +1,20 @@
+import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import { WatchlistButton } from '@/components/movieDetails/WatchlistButton';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Movie } from '@/domain/movie/entities/Movie';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useContext } from 'react';
 import { Dimensions, Image, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
 
 export const MovieDetailsScreen = () => {
+  const {
+    genre: { getGenresById },
+  } = useContext(DependencyProviderContext);
   useWatchlistStore(s => s.watchlist);
   const insets = useSafeAreaInsets();
   const { goBack } = useNavigation();
@@ -17,6 +22,7 @@ export const MovieDetailsScreen = () => {
     params: { movie },
   } = useRoute();
   const movieTyped: Movie = movie;
+  const genres = getGenresById(movieTyped.genreIds);
 
   return (
     <View style={{ flex: 1, backgroundColor: '#000' }}>
@@ -72,12 +78,16 @@ export const MovieDetailsScreen = () => {
             December 9, 2016
           </Text>
 
-          <Text style={{ fontWeight: 600, color: '#fff', marginBottom: 4 }}>
-            Genres
-          </Text>
-          <Text style={{ color: '#fff', marginBottom: 16 }}>
-            Comedy, Drama, Romance
-          </Text>
+          {!!genres.length && (
+            <>
+              <Text style={{ fontWeight: 600, color: '#fff', marginBottom: 4 }}>
+                Genres
+              </Text>
+              <Text style={{ color: '#fff', marginBottom: 16 }}>
+                {genres.join(', ')}
+              </Text>
+            </>
+          )}
         </View>
       </ParallaxScrollView>
       <View style={{ margin: 16 }}>

@@ -2,7 +2,7 @@ import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import { useSpotlightSections } from '@/app/movie/usecases/useSpotlightSections';
 import { ErrorPlaceholder } from '@/components/ErrorPlaceholder';
 import { FullScreenSpinner } from '@/components/FullScreenSpinner';
-import { MoviesCarousel } from '@/components/movie/MoviesCarousel';
+import { MoviesCarouselList } from '@/components/movie/MoviesCarouselList';
 import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
 import { Movie } from '@/domain/movie/entities/Movie';
 import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
@@ -11,8 +11,8 @@ import { mockDataNowPlaying } from '@/mockDataNowPlaying';
 import { mockDataPopular } from '@/mockDataPopular';
 import { mockDataTopRated } from '@/mockDataTopRated';
 import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MOCK_SECTIONS: SpotlightSection[] = [
@@ -34,7 +34,7 @@ export const SpotlightScreen = () => {
   const {
     watchlist: { addToWatchlist, removeFromWatchlist, isInWatchlist },
   } = useContext(DependencyProviderContext);
-  const { isLoading, sections, isError } = useSpotlightSections();
+  const { isLoading, sections, isError, refetch } = useSpotlightSections();
   const { navigate } = useNavigation();
   useWatchlistStore(s => s.watchlist);
 
@@ -52,26 +52,20 @@ export const SpotlightScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{ flex: 1 }}>
-        <Text
-          style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 16 }}
-        >
-          Premiere Night
-        </Text>
-        {isError && <ErrorPlaceholder />}
-        {isLoading && <FullScreenSpinner />}
-        {sections.map(it => {
-          return (
-            <MoviesCarousel
-              key={`${it.title}`}
-              movies={it.data}
-              sectionTitle={it.title}
-              onMoviePress={onMoviePress}
-              onHeartPress={onHeartPress}
-            />
-          );
-        })}
-      </ScrollView>
+      {isLoading && <FullScreenSpinner />}
+      {isError && (
+        <ErrorPlaceholder
+          title="Oops! Something went wrong..."
+          description="Please try again."
+          ctaText="Retry"
+          onPress={refetch}
+        />
+      )}
+      <MoviesCarouselList
+        sections={sections}
+        onMoviePress={onMoviePress}
+        onHeartPress={onHeartPress}
+      />
     </SafeAreaView>
   );
 };
