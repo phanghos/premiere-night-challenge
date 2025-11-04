@@ -2,6 +2,7 @@ import { ResetWatchlistHeaderButton } from '@/components/watchlist/ResetWatchlis
 import { MovieDetailsScreen } from '@/screens/MovieDetailsScreen';
 import { SpotlightScreen } from '@/screens/SpotlightScreen';
 import { WatchlistScreen } from '@/screens/WatchlistScreen';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFetchAndStoreAvailableGenres } from '../genre/usecases/useFetchAndStoreAvailableGenres';
@@ -20,7 +21,12 @@ const HomeTabs = () => (
     <Tab.Screen
       name="Spotlight"
       component={SpotlightScreen}
-      options={{ tabBarLabel: 'Home' }}
+      options={{
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ size, color }) => (
+          <MaterialDesignIcons name="home-outline" size={size} color={color} />
+        ),
+      }}
     />
     <Tab.Screen
       name="Watchlist"
@@ -31,6 +37,9 @@ const HomeTabs = () => (
         headerStyle: { backgroundColor: '#000' },
         headerTitleStyle: { color: '#fff' },
         headerRight: ResetWatchlistHeaderButton,
+        tabBarIcon: ({ size, color }) => (
+          <MaterialDesignIcons name="heart-outline" size={size} color={color} />
+        ),
       }}
     />
   </Tab.Navigator>
