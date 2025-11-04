@@ -35,7 +35,7 @@ export const useSpotlightSections = () => {
   } = fetchTopRatedMovies();
 
   const isLoading =
-    isPendingNowPlaying && isPendingPopular && isPendingTopRated;
+    isPendingNowPlaying || isPendingPopular || isPendingTopRated;
 
   const isError = isErrorNowPlaying && isErrorPopular && isErrorTopRated;
 

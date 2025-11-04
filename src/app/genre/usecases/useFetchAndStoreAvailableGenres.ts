@@ -8,7 +8,7 @@ export const useFetchAndStoreAvailableGenres = () => {
   const { data } = fetchAvailableGenres();
 
   useEffect(() => {
-    if (data) {
+    if (data?.length) {
       setGenres(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

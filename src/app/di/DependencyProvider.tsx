@@ -5,13 +5,13 @@ import { useFetchTopRatedMoviesRepository } from '@/data/movie/repositories/useF
 import { getGenresByIdsFromStore } from '@/domain/genre/stores/actions/getGenresByIdsFromStore';
 import { setGenres } from '@/domain/genre/stores/actions/setGenres';
 import { useGenreStore } from '@/domain/genre/stores/genreStore';
+import { useAvailableGenres } from '@/domain/genre/usecases/useAvailableGenres';
 import { addToWatchlist } from '@/domain/movie/stores/actions/addToWatchlist';
 import { isInWatchlist } from '@/domain/movie/stores/actions/isInWatchlist';
 import { isWatchlistEmpty } from '@/domain/movie/stores/actions/IsWatchlistEmpty';
 import { removeFromWatchlist } from '@/domain/movie/stores/actions/removeFromWatchlist';
 import { resetWatchlist } from '@/domain/movie/stores/actions/resetWatchlist';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
-import { useAvailableGenres } from '@/domain/movie/usecases/useAvailableGenres';
 import { useNowPlayingMovies } from '@/domain/movie/usecases/useNowPlayingMovies';
 import { usePopularMovies } from '@/domain/movie/usecases/usePopularMovies';
 import { useTopRatedMovies } from '@/domain/movie/usecases/useTopRatedMovies';
