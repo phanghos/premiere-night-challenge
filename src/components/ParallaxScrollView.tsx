@@ -76,13 +76,10 @@ const styles = StyleSheet.create({
   },
   header: {
     height: HEADER_HEIGHT,
-    overflow: 'hidden',
   },
   content: {
     flex: 1,
     padding: 16,
-    gap: 16,
-    overflow: 'hidden',
     backgroundColor: '#000',
   },
 });

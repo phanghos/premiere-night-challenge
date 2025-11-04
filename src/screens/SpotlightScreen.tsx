@@ -34,7 +34,7 @@ export const SpotlightScreen = () => {
   const {
     watchlist: { addToWatchlist, removeFromWatchlist, isInWatchlist },
   } = useContext(DependencyProviderContext);
-  const { isLoading, sections, isError, refetch } = useSpotlightSections();
+  const { isLoading, sections, isError } = useSpotlightSections();
   const { navigate } = useNavigation();
   useWatchlistStore(s => s.watchlist);
 
@@ -57,8 +57,6 @@ export const SpotlightScreen = () => {
         <ErrorPlaceholder
           title="Oops! Something went wrong..."
           description="Please try again."
-          ctaText="Retry"
-          onPress={refetch}
         />
       )}
       <MoviesCarouselList

@@ -1,7 +1,7 @@
 import { Movie } from '@/domain/movie/entities/Movie';
 import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { MoviesCarousel } from './MoviesCarousel';
 
 type MoviesCarouselListProps = {
@@ -20,13 +20,8 @@ export const MoviesCarouselList = ({
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <Text
-        style={{ fontSize: 24, fontWeight: 700, color: '#fff', margin: 16 }}
-      >
-        Premiere Night
-      </Text>
-
+    <ScrollView>
+      <Text style={styles.headerText}>Premiere Night</Text>
       {sections.map(it => {
         return (
           <MoviesCarousel
@@ -41,3 +36,12 @@ export const MoviesCarouselList = ({
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  headerText: {
+    fontSize: 24,
+    fontWeight: 700,
+    color: '#fff',
+    margin: 16,
+  },
+});

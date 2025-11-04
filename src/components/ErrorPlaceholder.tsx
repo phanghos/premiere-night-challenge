@@ -1,6 +1,6 @@
 import { Button } from '@react-navigation/elements';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 type ErrorPlaceholderProps = {
   title: string;
@@ -14,39 +14,40 @@ export const ErrorPlaceholder = ({
   description,
   ctaText,
   onPress,
-}: ErrorPlaceholderProps) => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 8,
-    }}
-  >
-    <Text
-      style={{
-        color: '#fff',
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 8,
-      }}
-    >
-      {title}
-    </Text>
-    <Text
-      style={{
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 300,
-        textAlign: 'center',
-      }}
-    >
-      {description}
-    </Text>
-    {!!ctaText && onPress && (
-      <Button variant="plain" onPress={onPress}>
-        {ctaText}
-      </Button>
-    )}
-  </View>
-);
+}: ErrorPlaceholderProps) => {
+  const shouldRenderCta = !!ctaText && onPress;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
+      {shouldRenderCta && (
+        <Button variant="plain" onPress={onPress}>
+          {ctaText}
+        </Button>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 500,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  description: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 300,
+    textAlign: 'center',
+  },
+});

@@ -5,7 +5,7 @@ import type { Movie } from '@/domain/movie/entities/Movie';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
-import { ListRenderItemInfo, View } from 'react-native';
+import { ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
 const keyExtractor = (movie: Movie) => `${movie.id}`;
@@ -28,6 +28,8 @@ const EmptyList = () => (
   />
 );
 
+const ItemSeparator = () => <View style={styles.separator} />;
+
 export const WatchlistScreen = () => {
   const {
     watchlist: { removeFromWatchlist },
@@ -45,7 +47,7 @@ export const WatchlistScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={styles.container}>
       {!watchlist.length ? (
         <EmptyList />
       ) : (
@@ -53,12 +55,24 @@ export const WatchlistScreen = () => {
           data={watchlist}
           renderItem={renderItem(onItemPress, onHeartPress)}
           keyExtractor={keyExtractor}
-          style={{ backgroundColor: '#000' }}
-          contentContainerStyle={{ padding: 16 }}
-          ItemSeparatorComponent={() => <View style={{ marginVertical: 8 }} />}
+          contentContainerStyle={styles.contentContainer}
+          ItemSeparatorComponent={ItemSeparator}
           itemLayoutAnimation={LinearTransition}
         />
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  contentContainer: {
+    padding: 16,
+  },
+  separator: {
+    marginVertical: 8,
+  },
+});

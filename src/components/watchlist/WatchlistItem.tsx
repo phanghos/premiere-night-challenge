@@ -1,7 +1,7 @@
 import type { Movie } from '@/domain/movie/entities/Movie';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type WatchlistItemProps = {
   movie: Movie;
@@ -14,31 +14,38 @@ export const WatchlistItem = ({
   onPress,
   onHeartPress,
 }: WatchlistItemProps) => {
+  const onHeartPressCallback = () => {
+    onHeartPress(movie);
+  };
+
   return (
-    <TouchableOpacity
-      onPress={() => onPress(movie)}
-      style={{
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        padding: 16,
-        alignItems: 'center',
-        borderRadius: 8,
-      }}
-    >
-      <Image
-        source={{ uri: movie.thumbnailPath }}
-        style={{ width: 50, height: 50, borderRadius: 20, marginRight: 8 }}
-      />
-      <Text style={{ flex: 1, fontSize: 16, fontWeight: 300 }}>
-        {movie.originalTitle}
-      </Text>
-      <TouchableOpacity
-        onPress={() => {
-          onHeartPress(movie);
-        }}
-      >
+    <TouchableOpacity onPress={() => onPress(movie)} style={styles.container}>
+      <Image source={{ uri: movie.thumbnailPath }} style={styles.image} />
+      <Text style={styles.title}>{movie.originalTitle}</Text>
+      <TouchableOpacity onPress={onHeartPressCallback}>
         <MaterialDesignIcons name="heart" size={25} color="red" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 8,
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 20,
+    marginRight: 8,
+  },
+  title: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 300,
+  },
+});

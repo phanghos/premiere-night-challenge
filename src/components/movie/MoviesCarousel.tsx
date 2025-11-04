@@ -1,6 +1,12 @@
 import { Movie } from '@/domain/movie/entities/Movie';
 import React, { useRef, useState } from 'react';
-import { Dimensions, LayoutChangeEvent, Text, View } from 'react-native';
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -66,10 +72,8 @@ export const MoviesCarousel = ({
 
   return (
     <Animated.View style={animatedStyle}>
-      <View style={{ paddingHorizontal: 16, paddingTop: 16 }}>
-        <Text style={{ fontSize: 20, fontWeight: 700, color: '#fff' }}>
-          {sectionTitle}
-        </Text>
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>{sectionTitle}</Text>
       </View>
       <Carousel
         width={SCREEN_WIDTH - 32}
@@ -85,3 +89,15 @@ export const MoviesCarousel = ({
     </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: '#fff',
+  },
+});

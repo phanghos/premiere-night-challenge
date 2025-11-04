@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import {
   Image,
   LayoutChangeEvent,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -15,6 +16,10 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+
+const INITIAL_IMAGE_SCALE = 1;
+const IMAGE_SCALE_DOWN = 0.8;
+const IMAGE_SCALE_UP = 1.5;
 
 type MovieListItemProps = {
   movie: Movie;
@@ -33,7 +38,7 @@ export const MoviesCarouselListItem = ({
     watchlist: { isInWatchlist },
   } = useContext(DependencyProviderContext);
   const inWatchlist = isInWatchlist(movie.id);
-  const heartScaleSv = useSharedValue(1);
+  const heartScaleSv = useSharedValue(INITIAL_IMAGE_SCALE);
 
   const heartAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -43,55 +48,38 @@ export const MoviesCarouselListItem = ({
     ],
   }));
 
+  const onPressCallback = () => onPress(movie);
+
   return (
     <TouchableOpacity
       onLayout={onLayout}
-      onPress={() => {
-        onPress(movie);
-      }}
-      style={{
-        width: 150,
-        borderRadius: 8,
-      }}
+      onPress={onPressCallback}
+      style={styles.container}
     >
       <Image
         source={{ uri: movie.posterPath }}
-        style={{
-          width: '100%',
-          aspectRatio: 27 / 40,
-          borderRadius: 8,
-        }}
+        style={styles.image}
         resizeMode="contain"
       />
-      <View
-        style={{
-          width: '100%',
-          paddingVertical: 8,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 300,
-            color: '#fff',
-            textAlign: 'center',
-          }}
-          numberOfLines={2}
-        >
+      <View style={styles.titleContainer}>
+        <Text style={styles.title} numberOfLines={2}>
           {movie.originalTitle}
         </Text>
       </View>
       <TouchableOpacity
         onPress={() => {
-          const firstAnim = inWatchlist ? withTiming(0.8) : withTiming(1.5);
-          heartScaleSv.value = withSequence(firstAnim, withTiming(1));
+          const firstAnim = inWatchlist
+            ? withTiming(IMAGE_SCALE_DOWN)
+            : withTiming(IMAGE_SCALE_UP);
+
+          heartScaleSv.value = withSequence(
+            firstAnim,
+            withTiming(INITIAL_IMAGE_SCALE),
+          );
+
           onHeartPress(movie);
         }}
-        style={{
-          position: 'absolute',
-          top: 8,
-          left: 8,
-        }}
+        style={styles.heartContainer}
       >
         <Animated.View style={heartAnimatedStyle}>
           <MaterialDesignIcons
@@ -104,3 +92,30 @@ export const MoviesCarouselListItem = ({
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: 150,
+    borderRadius: 8,
+  },
+  image: {
+    width: '100%',
+    aspectRatio: 27 / 40,
+    borderRadius: 8,
+  },
+  titleContainer: {
+    width: '100%',
+    paddingVertical: 8,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 300,
+    color: '#fff',
+    textAlign: 'center',
+  },
+  heartContainer: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+  },
+});

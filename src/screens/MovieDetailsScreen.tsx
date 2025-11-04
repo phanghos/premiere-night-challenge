@@ -1,12 +1,12 @@
 import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import { WatchlistButton } from '@/components/movieDetails/WatchlistButton';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { Movie } from '@/domain/movie/entities/Movie';
+import type { Movie } from '@/domain/movie/entities/Movie';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useContext } from 'react';
-import { Dimensions, Image, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
@@ -23,9 +23,10 @@ export const MovieDetailsScreen = () => {
   } = useRoute();
   const movieTyped: Movie = movie;
   const genres = getGenresById(movieTyped.genreIds);
+  const shouldRenderGenres = !!genres.length;
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={styles.container}>
       <ParallaxScrollView
         headerBackgroundColor={'#000'}
         headerImage={
@@ -34,63 +35,27 @@ export const MovieDetailsScreen = () => {
             style={{
               width: SCREEN_WIDTH,
               height: SCREEN_HEIGHT / 2.5,
-              zIndex: 1,
             }}
             resizeMode="stretch"
           />
         }
       >
-        <View style={{ zIndex: 30 }}>
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: 400,
-              color: '#fff',
-            }}
-          >
-            {movieTyped.originalTitle}
-          </Text>
-          <Text
-            style={{
-              fontWeight: 300,
-              color: '#fff',
-              marginTop: 8,
-              marginBottom: 16,
-            }}
-          >
-            2016
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 300,
-              color: '#fff',
-              marginBottom: 16,
-            }}
-          >
-            {movieTyped.overview}
-          </Text>
+        <View>
+          <Text style={styles.title}>{movieTyped.originalTitle}</Text>
+          <Text style={styles.overview}>{movieTyped.overview}</Text>
 
-          <Text style={{ fontWeight: 600, color: '#fff', marginBottom: 4 }}>
-            Release Date
-          </Text>
-          <Text style={{ color: '#fff', marginBottom: 16 }}>
-            December 9, 2016
-          </Text>
+          <Text style={styles.label}>Release Date</Text>
+          <Text style={styles.labelContent}>December 9, 2016</Text>
 
-          {!!genres.length && (
+          {shouldRenderGenres && (
             <>
-              <Text style={{ fontWeight: 600, color: '#fff', marginBottom: 4 }}>
-                Genres
-              </Text>
-              <Text style={{ color: '#fff', marginBottom: 16 }}>
-                {genres.join(', ')}
-              </Text>
+              <Text style={styles.label}>Genres</Text>
+              <Text style={styles.labelContent}>{genres.join(', ')}</Text>
             </>
           )}
         </View>
       </ParallaxScrollView>
-      <View style={{ margin: 16 }}>
+      <View style={styles.watchlistButton}>
         <WatchlistButton movie={movie} />
       </View>
       <HeaderBackButton
@@ -104,3 +69,34 @@ export const MovieDetailsScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 400,
+    color: '#fff',
+    marginBottom: 16,
+  },
+  overview: {
+    fontSize: 16,
+    fontWeight: 300,
+    color: '#fff',
+    marginBottom: 16,
+  },
+  label: {
+    fontWeight: 600,
+    color: '#fff',
+    marginBottom: 4,
+  },
+  labelContent: {
+    color: '#fff',
+    marginBottom: 16,
+  },
+  watchlistButton: {
+    margin: 16,
+  },
+});
