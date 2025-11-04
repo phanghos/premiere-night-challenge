@@ -40,7 +40,7 @@ export const MovieDetailsScreen = () => {
         }
       >
         <View>
-          <Text style={styles.title}>{movie.originalTitle}</Text>
+          <Text style={styles.title}>{movie.title}</Text>
           <Text style={styles.overview}>{movie.overview}</Text>
 
           <Text style={styles.label}>Release Date</Text>

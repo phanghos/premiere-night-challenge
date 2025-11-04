@@ -21,7 +21,7 @@ export const WatchlistItem = ({
   return (
     <TouchableOpacity onPress={() => onPress(movie)} style={styles.container}>
       <Image source={{ uri: movie.thumbnailPath }} style={styles.image} />
-      <Text style={styles.title}>{movie.originalTitle}</Text>
+      <Text style={styles.title}>{movie.title}</Text>
       <TouchableOpacity onPress={onHeartPressCallback}>
         <MaterialDesignIcons name="heart" size={25} color="red" />
       </TouchableOpacity>
