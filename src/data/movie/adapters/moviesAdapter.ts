@@ -1,3 +1,4 @@
+import { ImageSizes } from '@/core/types/ImageSize';
 import type { MovieRaw } from '@/core/types/MovieRaw';
 import type { Movie } from '@/domain/movie/entities/Movie';
 import { buildMovieImageUrl } from '@/shared/utils/buildMovieImageUrl';
@@ -6,7 +7,8 @@ export const moviesAdapter = (moviesRaw: MovieRaw[]): Movie[] =>
   moviesRaw.map<Movie>(it => ({
     id: it.id,
     originalTitle: it.original_title,
-    posterPath: buildMovieImageUrl(it.poster_path),
+    posterPath: buildMovieImageUrl(it.poster_path, ImageSizes.Poster),
+    thumbnailPath: buildMovieImageUrl(it.poster_path, ImageSizes.Thumbnail),
     overview: it.overview,
     genreIds: it.genre_ids,
   }));

@@ -26,7 +26,7 @@ export const WatchlistItem = ({
       }}
     >
       <Image
-        source={{ uri: movie.posterPath }}
+        source={{ uri: movie.thumbnailPath }}
         style={{ width: 50, height: 50, borderRadius: 20, marginRight: 8 }}
       />
       <Text style={{ flex: 1, fontSize: 16, fontWeight: 300 }}>
