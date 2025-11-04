@@ -2,6 +2,7 @@ import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import type { Movie } from '@/domain/movie/entities/Movie';
 import { useContext } from 'react';
 import {
+  Dimensions,
   Image,
   LayoutChangeEvent,
   StyleSheet,
@@ -10,6 +11,8 @@ import {
   View,
 } from 'react-native';
 import { MoviesCarouselListItemHeartIcon } from './MoviesCarouselListItemHeartIcon';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 type MovieListItemProps = {
   movie: Movie;
@@ -36,7 +39,10 @@ export const MoviesCarouselListItem = ({
     <TouchableOpacity
       onLayout={onLayout}
       onPress={onPressCallback}
-      style={styles.container}
+      style={{
+        width: SCREEN_WIDTH / 2.5,
+        borderRadius: 8,
+      }}
     >
       <Image
         source={{ uri: movie.posterPath }}
