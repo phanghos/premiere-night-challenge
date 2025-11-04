@@ -1,3 +1,4 @@
+import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import { useSpotlightSections } from '@/app/movie/usecases/useSpotlightSections';
 import { ErrorPlaceholder } from '@/components/ErrorPlaceholder';
 import { FullScreenSpinner } from '@/components/FullScreenSpinner';
@@ -5,10 +6,12 @@ import { MoviesCarousel } from '@/components/movie/MoviesCarousel';
 import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
 import { Movie } from '@/domain/movie/entities/Movie';
 import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
+import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { mockDataNowPlaying } from '@/mockDataNowPlaying';
 import { mockDataPopular } from '@/mockDataPopular';
 import { mockDataTopRated } from '@/mockDataTopRated';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -28,11 +31,23 @@ const MOCK_SECTIONS: SpotlightSection[] = [
 ] as const;
 
 export const SpotlightScreen = () => {
+  const {
+    watchlist: { addToWatchlist, removeFromWatchlist, isInWatchlist },
+  } = useContext(DependencyProviderContext);
   const { isLoading, sections, isError } = useSpotlightSections();
   const { navigate } = useNavigation();
+  useWatchlistStore(s => s.watchlist);
 
   const onMoviePress = (movie: Movie) => {
     navigate('MovieDetails', { movie });
+  };
+
+  const onHeartPress = (movie: Movie) => {
+    if (isInWatchlist(movie.id)) {
+      removeFromWatchlist(movie.id);
+    } else {
+      addToWatchlist(movie);
+    }
   };
 
   return (
@@ -52,6 +67,7 @@ export const SpotlightScreen = () => {
               movies={it.data}
               sectionTitle={it.title}
               onMoviePress={onMoviePress}
+              onHeartPress={onHeartPress}
             />
           );
         })}

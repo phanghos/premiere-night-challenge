@@ -1,6 +1,10 @@
 import { useFetchNowPlayingMoviesRepository } from '@/data/movie/repositories/useFetchNowPlayingMoviesRepository';
 import { useFetchPopularMoviesRepository } from '@/data/movie/repositories/useFetchPopularMoviesRepository';
 import { useFetchTopRatedMoviesRepository } from '@/data/movie/repositories/useFetchTopRatedMoviesRepository';
+import { addToWatchlist } from '@/domain/movie/stores/actions/addToWatchlist';
+import { isInWatchlist } from '@/domain/movie/stores/actions/isInWatchlist';
+import { removeFromWatchlist } from '@/domain/movie/stores/actions/removeFromWatchlist';
+import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { useNowPlayingMovies } from '@/domain/movie/usecases/useNowPlayingMovies';
 import { usePopularMovies } from '@/domain/movie/usecases/usePopularMovies';
 import { useTopRatedMovies } from '@/domain/movie/usecases/useTopRatedMovies';
@@ -19,6 +23,11 @@ export const DependencyProvider = ({ children }: DependencyProviderProps) => {
     ),
     fetchPopularMovies: usePopularMovies(useFetchPopularMoviesRepository),
     fetchTopRatedMovies: useTopRatedMovies(useFetchTopRatedMoviesRepository),
+    watchlist: {
+      addToWatchlist: addToWatchlist(useWatchlistStore),
+      removeFromWatchlist: removeFromWatchlist(useWatchlistStore),
+      isInWatchlist: isInWatchlist(useWatchlistStore),
+    },
   };
 
   return (

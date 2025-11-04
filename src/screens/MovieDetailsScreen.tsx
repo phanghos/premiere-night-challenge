@@ -1,24 +1,25 @@
+import { WatchlistButton } from '@/components/movieDetails/WatchlistButton';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { Movie } from '@/domain/movie/entities/Movie';
-import { Button, HeaderBackButton } from '@react-navigation/elements';
+import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
+import { HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Dimensions, Image, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 export const MovieDetailsScreen = () => {
+  useWatchlistStore(s => s.watchlist);
+  const insets = useSafeAreaInsets();
   const { goBack } = useNavigation();
   const {
     params: { movie },
   } = useRoute();
   const movieTyped: Movie = movie;
 
-  const onAddToWatchlistPress = () => {
-    console.log('Adding to Watchlist...');
-  };
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#000' }}>
       <ParallaxScrollView
         headerBackgroundColor={'#000'}
         headerImage={
@@ -73,16 +74,16 @@ export const MovieDetailsScreen = () => {
           <Text style={{ color: '#fff', marginBottom: 16 }}>
             Comedy, Drama, Romance
           </Text>
-          <Button variant="filled" onPress={onAddToWatchlistPress}>
-            Add To Watchlist
-          </Button>
         </View>
       </ParallaxScrollView>
+      <View style={{ margin: 16 }}>
+        <WatchlistButton movie={movie} />
+      </View>
       <HeaderBackButton
         onPress={goBack}
         style={{
           position: 'absolute',
-          top: 24,
+          top: insets.top,
           alignSelf: 'flex-start',
         }}
       />

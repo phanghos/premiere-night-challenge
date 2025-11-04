@@ -18,16 +18,22 @@ type MoviesListProps = {
   movies: Movie[];
   sectionTitle: string;
   onMoviePress: OnMoviePress;
+  onHeartPress: OnMoviePress;
 };
 
 const renderItem =
-  (onLayout: OnLayout, onMoviePress: OnMoviePress) =>
+  (
+    onLayout: OnLayout,
+    onMoviePress: OnMoviePress,
+    onHeartPress: OnMoviePress,
+  ) =>
   ({ item }: CarouselRenderItemInfo<Movie>) =>
     (
       <MoviesCarouselListItem
         movie={item}
         onLayout={onLayout}
         onPress={onMoviePress}
+        onHeartPress={onHeartPress}
       />
     );
 
@@ -35,6 +41,7 @@ export const MoviesCarousel = ({
   movies,
   sectionTitle,
   onMoviePress,
+  onHeartPress,
 }: MoviesListProps) => {
   const [carouselHeight, setCarouselHeight] = useState(0);
   const carouselHeightRef = useRef<number[]>([]);
@@ -68,7 +75,7 @@ export const MoviesCarousel = ({
         width={SCREEN_WIDTH - 32}
         height={carouselHeight}
         data={movies}
-        renderItem={renderItem(onLayout, onMoviePress)}
+        renderItem={renderItem(onLayout, onMoviePress, onHeartPress)}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.9,
