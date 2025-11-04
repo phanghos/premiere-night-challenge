@@ -1,6 +1,5 @@
 import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
-import { Movie } from '@/domain/movie/entities/Movie';
-import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import type { Movie } from '@/domain/movie/entities/Movie';
 import { useContext } from 'react';
 import {
   Image,
@@ -10,16 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
-
-const INITIAL_IMAGE_SCALE = 1;
-const IMAGE_SCALE_DOWN = 0.8;
-const IMAGE_SCALE_UP = 1.5;
+import { MoviesCarouselListItemHeartIcon } from './MoviesCarouselListItemHeartIcon';
 
 type MovieListItemProps = {
   movie: Movie;
@@ -37,16 +27,8 @@ export const MoviesCarouselListItem = ({
   const {
     watchlist: { isInWatchlist },
   } = useContext(DependencyProviderContext);
-  const inWatchlist = isInWatchlist(movie.id);
-  const heartScaleSv = useSharedValue(INITIAL_IMAGE_SCALE);
 
-  const heartAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        scale: heartScaleSv.value,
-      },
-    ],
-  }));
+  const inWatchlist = isInWatchlist(movie.id);
 
   const onPressCallback = () => onPress(movie);
 
@@ -66,29 +48,11 @@ export const MoviesCarouselListItem = ({
           {movie.originalTitle}
         </Text>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          const firstAnim = inWatchlist
-            ? withTiming(IMAGE_SCALE_DOWN)
-            : withTiming(IMAGE_SCALE_UP);
-
-          heartScaleSv.value = withSequence(
-            firstAnim,
-            withTiming(INITIAL_IMAGE_SCALE),
-          );
-
-          onHeartPress(movie);
-        }}
-        style={styles.heartContainer}
-      >
-        <Animated.View style={heartAnimatedStyle}>
-          <MaterialDesignIcons
-            name={inWatchlist ? 'heart' : 'heart-outline'}
-            size={25}
-            color={inWatchlist ? 'red' : undefined}
-          />
-        </Animated.View>
-      </TouchableOpacity>
+      <MoviesCarouselListItemHeartIcon
+        movie={movie}
+        isInWatchlist={inWatchlist}
+        onPress={onHeartPress}
+      />
     </TouchableOpacity>
   );
 };
