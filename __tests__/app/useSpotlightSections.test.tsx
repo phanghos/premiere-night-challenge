@@ -97,9 +97,10 @@ describe('useSpotlightSections', () => {
     });
 
     // Then
-    expect(result.current).toMatchObject({
+    expect(result.current).toStrictEqual({
       isLoading: true,
       isError: false,
+      sections: [],
     });
   });
 
