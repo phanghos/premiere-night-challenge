@@ -8,4 +8,5 @@ export const moviesAdapter = (moviesRaw: MovieRaw[]): Movie[] =>
     originalTitle: it.original_title,
     posterPath: buildMovieImageUrl(it.poster_path),
     overview: it.overview,
+    genreIds: it.genre_ids,
   }));

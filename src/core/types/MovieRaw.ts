@@ -3,4 +3,5 @@ export type MovieRaw = {
   original_title: string;
   poster_path: string;
   overview: string;
+  genre_ids: number[];
 };

@@ -3,4 +3,5 @@ export type Movie = {
   originalTitle: string;
   posterPath: string;
   overview: string;
+  genreIds: number[];
 };

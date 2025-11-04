@@ -4,6 +4,7 @@ import { SpotlightScreen } from '@/screens/SpotlightScreen';
 import { WatchlistScreen } from '@/screens/WatchlistScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFetchAndStoreAvailableGenres } from '../genre/usecases/useFetchAndStoreAvailableGenres';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,17 +36,21 @@ const HomeTabs = () => (
   </Tab.Navigator>
 );
 
-export const RootStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="HomeTabs" component={HomeTabs} />
-    <Stack.Screen
-      name="MovieDetails"
-      component={MovieDetailsScreen}
-      options={{
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        fullScreenGestureEnabled: true,
-      }}
-    />
-  </Stack.Navigator>
-);
+export const RootStack = () => {
+  useFetchAndStoreAvailableGenres();
+
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="HomeTabs" component={HomeTabs} />
+      <Stack.Screen
+        name="MovieDetails"
+        component={MovieDetailsScreen}
+        options={{
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          fullScreenGestureEnabled: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};

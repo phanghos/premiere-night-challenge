@@ -1,3 +1,6 @@
+import type { FetchAvailableGenresRepository } from '@/domain/genre/repositories/FetchAvailableGenresRepository';
+import type { GetGenresByIdFromStore } from '@/domain/genre/stores/actions/getGenresByIdsFromStore';
+import type { SetGenres } from '@/domain/genre/stores/actions/setGenres';
 import type { FetchNowPlayingMoviesRepository } from '@/domain/movie/repositories/FetchNowPlayingMoviesRepository';
 import type { FetchPopularMoviesRepository } from '@/domain/movie/repositories/FetchPopularMoviesRepository';
 import type { FetchTopRatedMoviesRepository } from '@/domain/movie/repositories/FetchTopRatedMoviesRepository';
@@ -11,6 +14,11 @@ export type AppDependencies = {
   fetchNowPlayingMovies: FetchNowPlayingMoviesRepository;
   fetchPopularMovies: FetchPopularMoviesRepository;
   fetchTopRatedMovies: FetchTopRatedMoviesRepository;
+  genre: {
+    fetchAvailableGenres: FetchAvailableGenresRepository;
+    getGenresById: GetGenresByIdFromStore;
+    setGenres: SetGenres;
+  };
   watchlist: {
     addToWatchlist: AddToWatchlist;
     removeFromWatchlist: RemoveFromWatchlist;
