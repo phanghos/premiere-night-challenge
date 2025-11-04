@@ -5,4 +5,5 @@ export type Movie = {
   thumbnailPath: string;
   overview: string;
   genreIds: number[];
+  releaseDate: string;
 };

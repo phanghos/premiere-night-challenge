@@ -1,10 +1,10 @@
 import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
+import type { RootStackParamList } from '@/app/navigation/RootStackParamList';
 import { WatchlistButton } from '@/components/movieDetails/WatchlistButton';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import type { Movie } from '@/domain/movie/entities/Movie';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { HeaderBackButton } from '@react-navigation/elements';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useContext } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,9 +20,8 @@ export const MovieDetailsScreen = () => {
   const { goBack } = useNavigation();
   const {
     params: { movie },
-  } = useRoute();
-  const movieTyped: Movie = movie;
-  const genres = getGenresById(movieTyped.genreIds);
+  } = useRoute<RouteProp<RootStackParamList, 'MovieDetails'>>();
+  const genres = getGenresById(movie.genreIds);
   const shouldRenderGenres = !!genres.length;
 
   return (
@@ -31,7 +30,7 @@ export const MovieDetailsScreen = () => {
         headerBackgroundColor={'#000'}
         headerImage={
           <Image
-            source={{ uri: movieTyped.posterPath }}
+            source={{ uri: movie.posterPath }}
             style={{
               width: SCREEN_WIDTH,
               height: SCREEN_HEIGHT / 2.5,
@@ -41,11 +40,11 @@ export const MovieDetailsScreen = () => {
         }
       >
         <View>
-          <Text style={styles.title}>{movieTyped.originalTitle}</Text>
-          <Text style={styles.overview}>{movieTyped.overview}</Text>
+          <Text style={styles.title}>{movie.originalTitle}</Text>
+          <Text style={styles.overview}>{movie.overview}</Text>
 
           <Text style={styles.label}>Release Date</Text>
-          <Text style={styles.labelContent}>December 9, 2016</Text>
+          <Text style={styles.labelContent}>{movie.releaseDate}</Text>
 
           {shouldRenderGenres && (
             <>
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 400,
+    fontWeight: 500,
     color: '#fff',
     marginBottom: 16,
   },
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
-    fontWeight: 600,
+    fontWeight: 700,
     color: '#fff',
     marginBottom: 4,
   },

@@ -1,16 +1,17 @@
 import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
 import { useSpotlightSections } from '@/app/movie/usecases/useSpotlightSections';
+import { RootStackParamList } from '@/app/navigation/RootStackParamList';
 import { ErrorPlaceholder } from '@/components/ErrorPlaceholder';
 import { FullScreenSpinner } from '@/components/FullScreenSpinner';
 import { MoviesCarouselList } from '@/components/movie/MoviesCarouselList';
 import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
-import { Movie } from '@/domain/movie/entities/Movie';
+import type { Movie } from '@/domain/movie/entities/Movie';
 import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
 import { mockDataNowPlaying } from '@/mockDataNowPlaying';
 import { mockDataPopular } from '@/mockDataPopular';
 import { mockDataTopRated } from '@/mockDataTopRated';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,7 +36,8 @@ export const SpotlightScreen = () => {
     watchlist: { addToWatchlist, removeFromWatchlist, isInWatchlist },
   } = useContext(DependencyProviderContext);
   const { isLoading, sections, isError } = useSpotlightSections();
-  const { navigate } = useNavigation();
+  const { navigate } =
+    useNavigation<NavigationProp<RootStackParamList, 'MovieDetails'>>();
   useWatchlistStore(s => s.watchlist);
 
   const onMoviePress = (movie: Movie) => {

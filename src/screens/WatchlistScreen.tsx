@@ -1,10 +1,11 @@
 import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
+import type { RootStackParamList } from '@/app/navigation/RootStackParamList';
 import { EmptyListPlaceholder } from '@/components/EmptyListPlaceholder';
 import { WatchlistItem } from '@/components/watchlist/WatchlistItem';
 import type { Movie } from '@/domain/movie/entities/Movie';
 import { useWatchlistStore } from '@/domain/movie/stores/watchlistStore';
-import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useContext, useMemo } from 'react';
 import { ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
@@ -35,8 +36,9 @@ export const WatchlistScreen = () => {
     watchlist: { removeFromWatchlist },
   } = useContext(DependencyProviderContext);
   const watchlistMap = useWatchlistStore(s => s.watchlist);
-  const watchlist = Object.values(watchlistMap);
-  const { navigate } = useNavigation();
+  const watchlist = useMemo(() => Object.values(watchlistMap), [watchlistMap]);
+  const { navigate } =
+    useNavigation<NavigationProp<RootStackParamList, 'MovieDetails'>>();
 
   const onItemPress = (movie: Movie) => {
     navigate('MovieDetails', { movie });
