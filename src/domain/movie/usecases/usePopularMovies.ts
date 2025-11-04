@@ -1,10 +1,11 @@
-import { ApiResult } from '@/core/types/ApiResult';
-import { MovieRaw } from '@/core/types/MovieRaw';
-import { QueryResult } from '@/core/types/QueryResult';
+import type { ApiResult } from '@/core/types/ApiResult';
+import type { MovieRaw } from '@/core/types/MovieRaw';
+import type { QueryResult } from '@/core/types/QueryResult';
+import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { moviesAdapter } from '../adapters/moviesAdapter';
-import { Movie } from '../entities/Movie';
+import type { Movie } from '../entities/Movie';
+import type { FetchPopularMoviesRepository } from '../repositories/FetchPopularMoviesRepository';
 
 export const usePopularMovies = (): QueryResult<Movie[]> => {
   const { isPending, data, isError } = useQuery<ApiResult<MovieRaw[]>>({
@@ -20,3 +21,7 @@ export const usePopularMovies = (): QueryResult<Movie[]> => {
     isError,
   };
 };
+
+export const usePopularMovies2 =
+  (repository: FetchPopularMoviesRepository) => () =>
+    repository();

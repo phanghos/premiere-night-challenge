@@ -1,10 +1,8 @@
-import { Movie } from '@/domain/movie/entities/Movie';
-import { SectionType } from '@/domain/movie/entities/SectionType';
-import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
-import { useNowPlayingMovies } from '@/domain/movie/usecases/useNowPlayingMovies';
-import { usePopularMovies } from '@/domain/movie/usecases/usePopularMovies';
-import { useTopRatedMovies } from '@/domain/movie/usecases/useTopRatedMovies';
-import { useMemo } from 'react';
+import { DependencyProviderContext } from '@/app/di/DependencyProviderContext';
+import type { Movie } from '@/domain/movie/entities/Movie';
+import type { SectionType } from '@/domain/movie/entities/SectionType';
+import type { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
+import { useContext, useMemo } from 'react';
 
 const initSpotlightSection = (
   title: SectionType,
@@ -15,36 +13,41 @@ const initSpotlightSection = (
 });
 
 export const useSpotlightSections = () => {
+  const { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies } =
+    useContext(DependencyProviderContext);
+
   const {
     isLoading: isPendingNowPlaying,
     data: nowPlayingData,
     isError: isErrorNowPlaying,
-  } = useNowPlayingMovies();
+  } = fetchNowPlayingMovies();
 
   const {
     isLoading: isPendingPopular,
     data: popularData,
     isError: isErrorPopular,
-  } = usePopularMovies();
+  } = fetchPopularMovies();
 
   const {
     isLoading: isPendingTopRated,
     data: topRatedData,
     isError: isErrorTopRated,
-  } = useTopRatedMovies();
+  } = fetchTopRatedMovies();
 
   const isLoading =
     isPendingNowPlaying && isPendingPopular && isPendingTopRated;
 
   const isError = isErrorNowPlaying && isErrorPopular && isErrorTopRated;
 
-  const sections = useMemo(() => {
-    return [
-      initSpotlightSection('Now Playing', nowPlayingData),
-      initSpotlightSection('Popular', popularData),
-      initSpotlightSection('Top Rated', topRatedData),
-    ].filter(it => !!it.data.length);
-  }, [nowPlayingData, popularData, topRatedData]);
+  const sections = useMemo(
+    () =>
+      [
+        initSpotlightSection('Now Playing', nowPlayingData),
+        initSpotlightSection('Popular', popularData),
+        initSpotlightSection('Top Rated', topRatedData),
+      ].filter(it => !!it.data.length),
+    [nowPlayingData, popularData, topRatedData],
+  );
 
   return {
     isLoading,

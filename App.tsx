@@ -5,6 +5,7 @@
  * @format
  */
 
+import { DependencyProvider } from '@/app/di/DependencyProvider';
 import { RootStack } from '@/app/navigation/RootStack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
@@ -49,7 +50,9 @@ function App() {
         <SafeAreaProvider>
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           <NavigationContainer>
-            <RootStack />
+            <DependencyProvider>
+              <RootStack />
+            </DependencyProvider>
           </NavigationContainer>
         </SafeAreaProvider>
       </GestureHandlerRootView>

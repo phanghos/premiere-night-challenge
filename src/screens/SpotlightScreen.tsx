@@ -1,8 +1,8 @@
 import { useSpotlightSections } from '@/app/movie/usecases/useSpotlightSections';
 import { ErrorPlaceholder } from '@/components/ErrorPlaceholder';
 import { FullScreenSpinner } from '@/components/FullScreenSpinner';
-import { MoviesCarousel } from '@/components/MoviesCarousel';
-import { moviesAdapter } from '@/domain/movie/adapters/moviesAdapter';
+import { MoviesCarousel } from '@/components/movie/MoviesCarousel';
+import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
 import { Movie } from '@/domain/movie/entities/Movie';
 import { SpotlightSection } from '@/domain/movie/entities/SpotlightSection';
 import { mockDataNowPlaying } from '@/mockDataNowPlaying';

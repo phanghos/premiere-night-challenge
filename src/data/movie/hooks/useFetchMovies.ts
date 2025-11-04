@@ -1,15 +1,14 @@
 import type { ApiResult } from '@/core/types/ApiResult';
 import type { MovieRaw } from '@/core/types/MovieRaw';
 import type { QueryResult } from '@/core/types/QueryResult';
-import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
+import type { Movie } from '@/domain/movie/entities/Movie';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import type { Movie } from '../entities/Movie';
-import type { FetchNowPlayingMoviesRepository } from '../repositories/FetchNowPlayingMoviesRepository';
+import { moviesAdapter } from '../adapters/moviesAdapter';
 
-export const useNowPlayingMovies = (): QueryResult<Movie[]> => {
+export const useFetchMovies = (query: string): QueryResult<Movie[]> => {
   const { isPending, data, isError } = useQuery<ApiResult<MovieRaw[]>>({
-    queryKey: ['/movie/now_playing?language=en-US&page=1'],
+    queryKey: [query],
   });
   const movies = useMemo(() => moviesAdapter(data?.results || []), [data]);
 
@@ -19,7 +18,3 @@ export const useNowPlayingMovies = (): QueryResult<Movie[]> => {
     isError,
   };
 };
-
-export const useNowPlayingMovies2 =
-  (repository: FetchNowPlayingMoviesRepository) => () =>
-    repository();

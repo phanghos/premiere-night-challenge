@@ -1,5 +1,5 @@
 import { Movie } from '@/domain/movie/entities/Movie';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Dimensions, LayoutChangeEvent, Text, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
