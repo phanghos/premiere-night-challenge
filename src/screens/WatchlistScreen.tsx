@@ -25,7 +25,7 @@ const renderItem =
 const EmptyList = () => (
   <EmptyListPlaceholder
     title={'Oops!'}
-    description={`Looks like you haven\'t added any movies to your watchlist yet!`}
+    description={`Looks like you haven't added any movies to your watchlist yet!`}
   />
 );
 

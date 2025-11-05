@@ -1,5 +1,5 @@
 import { ImageSizes } from '@/core/types/ImageSize';
-import type { MovieRaw } from '@/core/types/MovieRaw';
+import type { MovieRaw } from '@/data/movie/dtos/MovieRaw';
 import type { Movie } from '@/domain/movie/entities/Movie';
 import { buildMovieImageUrl } from '@/shared/utils/buildMovieImageUrl';
 import { formatDate } from '@/shared/utils/formatDate';

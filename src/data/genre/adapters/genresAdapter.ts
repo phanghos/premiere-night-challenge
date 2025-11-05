@@ -1,4 +1,4 @@
-import type { GenreRaw } from '@/core/types/GenreRaw';
+import type { GenreRaw } from '@/data/genre/dtos/GenreRaw';
 import type { Genre } from '@/domain/genre/entities/Genre';
 
 export const genresAdapter = (genresRaw: GenreRaw[]): Genre[] =>

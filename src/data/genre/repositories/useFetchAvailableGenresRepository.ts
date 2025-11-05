@@ -1,4 +1,4 @@
-import { GenreRaw } from '@/core/types/GenreRaw';
+import { GenreRaw } from '@/data/genre/dtos/GenreRaw';
 import type { FetchAvailableGenresRepository } from '@/domain/genre/repositories/FetchAvailableGenresRepository';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';

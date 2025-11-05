@@ -1,5 +1,5 @@
-import { MovieRaw } from '@/core/types/MovieRaw';
 import { moviesAdapter } from '@/data/movie/adapters/moviesAdapter';
+import { MovieRaw } from '@/data/movie/dtos/MovieRaw';
 import { Movie } from '@/domain/movie/entities/Movie';
 
 describe('moviesAdapter', () => {

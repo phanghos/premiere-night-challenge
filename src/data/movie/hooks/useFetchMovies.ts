@@ -1,6 +1,6 @@
 import type { ApiResult } from '@/core/types/ApiResult';
-import type { MovieRaw } from '@/core/types/MovieRaw';
 import type { QueryResult } from '@/core/types/QueryResult';
+import type { MovieRaw } from '@/data/movie/dtos/MovieRaw';
 import type { Movie } from '@/domain/movie/entities/Movie';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';

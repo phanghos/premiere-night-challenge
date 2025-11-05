@@ -1,4 +1,4 @@
-import { MovieRaw } from '@/core/types/MovieRaw';
+import { MovieRaw } from '@/data/movie/dtos/MovieRaw';
 import { useFetchMovies } from '@/data/movie/hooks/useFetchMovies';
 import {
   QueryObserverLoadingErrorResult,
@@ -61,10 +61,4 @@ describe('useFetchMovies', () => {
   });
 });
 
-const movieRaw: MovieRaw = {
-  id: 1,
-  original_title: 'title',
-  poster_path: 'poster',
-  overview: 'overview',
-  genre_ids: [1, 2],
-};
+const movieRaw = Builder<MovieRaw>().build;

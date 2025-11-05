@@ -8,12 +8,7 @@ module.exports = {
       jsx: true,
     },
   },
-  extends: [
-    'eslint:recommended',
-    // 'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    '@react-native',
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', '@react-native'],
   plugins: ['@typescript-eslint', 'react', '@tanstack/eslint-plugin-query'],
   env: {
     browser: true,
