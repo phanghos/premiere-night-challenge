@@ -58,6 +58,7 @@ export const MovieDetailsScreen = () => {
         <WatchlistButton movie={movie} />
       </View>
       <HeaderBackButton
+        tintColor={'#007AFF'}
         onPress={goBack}
         style={{
           position: 'absolute',
