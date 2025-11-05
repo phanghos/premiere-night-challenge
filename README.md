@@ -212,4 +212,36 @@ Users can also manage watchlist status from:
 
 - When displaying the small _heart_ icon at the top left of each carousel item, ideally the poster should have a small gradient at the top so that the heart is clearly visible. This would have been done with _react-native-linear-gradient_.
 
+### "Boolean Hell"
+
+- A framework-agnostic interface has been created to work with _React Query_ queries in the form of an object containing: `{ isLoading, isError, data }`. The consequence of this is that components will always have some kind of logic similar to the following:
+
+```
+if (isLoading) {
+  // handle loading state
+}
+
+if (isError) {
+  // handle error state
+}
+
+// handle data
+```
+
+I find the concept of TS _Discriminated Unions_ relevant here. I could define a union of types with all the possible states that a request can be in, and later discriminate on a `status` property. In this way, we make sure there are no 'impossible states' or unhandled branches. In practice, it would resemble something along these lines:
+
+```
+if (status === 'loading') {
+  // handle loading state
+}
+
+if (status === 'error') {
+  // in this branch, I could have access to an error prop
+}
+
+if (status === 'success') {
+  // in this branch, I could have access to the data prop
+}
+```
+
 ## Built with ❤️ by Roberto Tatasciore
