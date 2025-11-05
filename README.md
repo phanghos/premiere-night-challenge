@@ -148,6 +148,13 @@ Users can also manage watchlist status from:
 
 ## ⚠️ Known Issues or Limitations
 
+### Image Caching
+
+---
+
+- Images are not cached. I would have implemented this with **React Native Fast Image**.
+- No placeholder for images that failed to load.
+
 ### "Undo" capability
 
 ---
